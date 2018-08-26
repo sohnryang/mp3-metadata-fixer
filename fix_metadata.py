@@ -1,19 +1,55 @@
-from mutagen.mp3 import MP3
-from mutagen.id3 import ID3, APIC, TT2, TPE1, TRCK, TALB, USLT, error
+"""
+fix_metadata.py -- fixed metadata of mp3 files
+
+"""
+
+
 import sys
-import urllib.request
+import requests
+from xml.sax.saxutils import escape
+from mutagen.id3 import ID3, APIC
+
+
+def generate_search_query(file_name):
+    """
+    generate_search_query(flie_name: str) -- generate a search query which is
+    fed to iTunes API.
+
+    Arguments:
+    file_name: str -- name of a file which is used to generate a query.
+    """
+    return file_name
+
+
+def get_itunes_search_results(query):
+    """
+    get_itunes_search_results(query: str) -- search for info of a music file
+    via iTunes Web API.
+
+    This function returns the first one from iTunes search results.
+
+    Arguments:
+    query: str -- the query to search for info.
+    """
+    url = 'https://itunes.apple.com/search?{0}'.format(
+        escape(query).replace(' ', '+'))
+    r = requests.get(url)
+
 
 def main():
+    """
+    main() -- main function
+
+    """
     if len(sys.argv) < 2:
-        print('error: specify an argument')
+        print('fix_metadata: error: no file specified', file=sys.stderr)
         sys.exit(1)
 
-    audio = MP3(sys.argv[1], ID3=ID3)
-    u = urllib.request.urlretrieve('https://is5-ssl.mzstatic.com/image/thumb/Music60/v4/10/e8/19/10e8197e-d0cd-79b3-183d-d0d1e604a5db/source/100x100bb.jpg', 'cover.jpg')
-    image_data = open('cover.jpg', 'rb').read()
-    id3 = ID3(sys.argv[1])
-    id3.add(APIC(3, 'image/jpeg', 3, 'Front Cover', image_data))
-    id3.save(v2_version=3)
+    file_names = sys.argv[1:]
+    for file_name in file_names:
+        query = generate_search_query(file_name)
+        search_result = get_itunes_search_results(query)
+
 
 if __name__ == '__main__':
     main()
