@@ -4,7 +4,6 @@ fix_metadata.py -- fixed metadata of mp3 files
 """
 
 
-import json
 import sys
 import requests
 from xml.sax.saxutils import escape
