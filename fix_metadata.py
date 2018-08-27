@@ -4,6 +4,7 @@ fix_metadata.py -- fixed metadata of mp3 files
 """
 
 
+import json
 import sys
 import requests
 from xml.sax.saxutils import escape
@@ -18,7 +19,7 @@ def generate_search_query(file_name):
     Arguments:
     file_name: str -- name of a file which is used to generate a query.
     """
-    return file_name
+    return escape(file_name).replace(' ', '+')
 
 
 def get_itunes_search_results(query):
@@ -31,9 +32,9 @@ def get_itunes_search_results(query):
     Arguments:
     query: str -- the query to search for info.
     """
-    url = 'https://itunes.apple.com/search?{0}'.format(
-        escape(query).replace(' ', '+'))
+    url = 'https://itunes.apple.com/search?{0}'.format(query)
     r = requests.get(url)
+    return json.load(r)
 
 
 def main():
