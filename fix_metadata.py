@@ -27,8 +27,6 @@ def get_itunes_search_results(query):
     get_itunes_search_results(query: str) -- search for info of a music file
     via iTunes Web API.
 
-    This function returns the first one from iTunes search results.
-
     Arguments:
     query: str -- the query to search for info.
     """
