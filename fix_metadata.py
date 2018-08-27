@@ -29,7 +29,7 @@ def get_itunes_search_results(query):
     Arguments:
     query: str -- the query to search for info.
     """
-    url = 'https://itunes.apple.com/search?{0}'.format(query)
+    url = 'https://itunes.apple.com/search?term={0}'.format(query)
     r = requests.get(url)
     r.raise_for_status()
     return r.json()
