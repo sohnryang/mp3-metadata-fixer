@@ -32,7 +32,8 @@ def get_itunes_search_results(query):
     """
     url = 'https://itunes.apple.com/search?{0}'.format(query)
     r = requests.get(url)
-    return json.load(r)
+    r.raise_for_status()
+    return r.json()
 
 
 def main():
