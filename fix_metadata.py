@@ -4,6 +4,7 @@ fix_metadata.py -- fixed metadata of mp3 files
 """
 
 
+import shutil
 import sys
 import requests
 from xml.sax.saxutils import escape
@@ -35,6 +36,22 @@ def get_itunes_search_results(query):
     return r.json()
 
 
+def download_cover_image(url, file_name):
+    """
+    download_cover_image(url: str) -- download the cover image from the given
+    url.
+
+    Arguments:
+    url: str -- the url to download the image from.
+    file_name: str -- the name of the file to download to.
+    """
+    r = requests.get(url, stream=True)
+    r.raise_for_status()
+    with open(file_name, 'wb') as f:
+        r.raw.decode_content = True
+        shutil.copyfileobj(r.raw, f)
+
+
 def main():
     """
     main() -- main function
@@ -48,6 +65,9 @@ def main():
     for file_name in file_names:
         query = generate_search_query(file_name)
         search_result = get_itunes_search_results(query)
+        first_result = search_result['results'][0]
+        cover_image_url = first_result['artworkUrl100']
+        download_cover_image(cover_image_url)
 
 
 if __name__ == '__main__':
