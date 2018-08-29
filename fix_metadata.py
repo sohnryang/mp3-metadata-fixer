@@ -52,6 +52,14 @@ def download_cover_image(url, file_name):
         shutil.copyfileobj(r.raw, f)
 
 
+def extract_first_result(search_result):
+    """
+    extract_first_result(search_result: dict) -- extract first result from
+    iTunes search results.
+    """
+    return search_result['results'][0]
+
+
 def main():
     """
     main() -- main function
@@ -65,7 +73,7 @@ def main():
     for file_name in file_names:
         query = generate_search_query(file_name)
         search_result = get_itunes_search_results(query)
-        first_result = search_result['results'][0]
+        first_result = extract_first_result(search_result)
         cover_image_url = first_result['artworkUrl100']
         download_cover_image(cover_image_url)
 
