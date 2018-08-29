@@ -19,7 +19,7 @@ def generate_search_query(file_name):
     Arguments:
     file_name: str -- name of a file which is used to generate a query.
     """
-    return escape(file_name).replace(' ', '+')
+    return escape(file_name).replace(' ', '+').replace('.mp3', '')
 
 
 def get_itunes_search_results(query):
