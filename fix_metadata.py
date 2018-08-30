@@ -38,8 +38,8 @@ def get_itunes_search_results(query):
 
 def download_cover_image(url, file_name):
     """
-    download_cover_image(url: str) -- download the cover image from the given
-    url.
+    download_cover_image(url: str, file_name: str) -- download the cover image
+    from the given url.
 
     Arguments:
     url: str -- the url to download the image from.
