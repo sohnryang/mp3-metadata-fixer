@@ -36,7 +36,7 @@ def get_itunes_search_results(query):
     return r.json()
 
 
-def download_cover_image(url, file_name):
+def download_cover_image(url, file_name='cover.jpg'):
     """
     download_cover_image(url: str, file_name: str) -- download the cover image
     from the given url.
@@ -73,6 +73,22 @@ def fix_metadata(file_name, search_result):
     audio['title'] = search_result['trackName']
     audio['artist'] = search_result['artistName']
     audio['genre'] = search_result['primaryGenreName']
+
+
+def update_cover(file_name, cover_img_name='cover.jpg'):
+    """
+    update_cover(file_name: str, cover_img_name: str) -- update the file's
+    cover image.
+
+    Arguments:
+    file_name: str -- name of the mp3 file.
+    cover_img_name: str -- name of the cover file. (default: cover.jpg)
+    """
+    audio = ID3(file_name)
+    with open(cover_img_name, 'rb') as img:
+        audio['APIC'] = APIC(encoding=3, mime='image/jpeg', type=3,
+                             desc='Cover', data=img.read())
+    audio.save()
 
 
 def main():
