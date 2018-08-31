@@ -8,7 +8,7 @@ import shutil
 import sys
 import requests
 from xml.sax.saxutils import escape
-from mutagen.id3 import ID3, APIC
+from mutagen.id3 import ID3, APIC, TPE1, TALB, TRCK
 
 
 def generate_search_query(file_name):
@@ -70,10 +70,10 @@ def fix_metadata(file_name, search_result):
     search_result: dict -- a search result dict extracted from raw data.
     """
     audio = ID3(file_name)
-    audio['title'] = search_result['trackName']
-    audio['artist'] = search_result['artistName']
-    audio['genre'] = search_result['primaryGenreName']
-    audio['album'] = search_result['collectionName']
+    audio['TPE1'] = TPE1(encoding=3, text=search_result['artistName'])
+    audio['TIT2'] = TALB(encoding=3, text=search_result['trackName'])
+    audio['TRCK'] = TRCK(encoding=3, text=search_result['trackNumber'])
+    audio['TALB'] = TALB(encoding=3, text=search_result['collectionName'])
     audio.save()
 
 
