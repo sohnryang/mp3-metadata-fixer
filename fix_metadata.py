@@ -4,6 +4,7 @@ fix_metadata.py -- fix metadata of mp3 files
 """
 
 
+import os
 import shutil
 import sys
 import urllib.parse
@@ -20,7 +21,8 @@ def generate_search_query(file_name):
     Arguments:
     file_name: str -- name of a file which is used to generate a query.
     """
-    return urllib.parse.quote_plus(file_name)
+    raw_name = os.path.basename(file_name).replace('.mp3', '')
+    return urllib.parse.quote(raw_name)
 
 
 def get_itunes_search_results(query):
