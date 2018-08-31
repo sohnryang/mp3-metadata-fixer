@@ -73,6 +73,8 @@ def fix_metadata(file_name, search_result):
     audio['title'] = search_result['trackName']
     audio['artist'] = search_result['artistName']
     audio['genre'] = search_result['primaryGenreName']
+    audio['album'] = search_result['collectionName']
+    audio.save()
 
 
 def update_cover(file_name, cover_img_name='cover.jpg'):
