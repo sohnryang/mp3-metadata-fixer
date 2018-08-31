@@ -60,6 +60,21 @@ def extract_first_result(search_result):
     return search_result['results'][0]
 
 
+def fix_metadata(file_name, search_result):
+    """
+    fix_metadata(file_name: str, search_result: dict) -- fix mp3 file's
+    metadata with search result.
+
+    Arguments:
+    file_name: str -- name of the mp3 file.
+    search_result: dict -- a search result dict extracted from raw data.
+    """
+    audio = ID3(file_name)
+    audio['title'] = search_result['trackName']
+    audio['artist'] = search_result['artistName']
+    audio['genre'] = search_result['primaryGenreName']
+
+
 def main():
     """
     main() -- main function
