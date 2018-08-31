@@ -1,5 +1,5 @@
 """
-fix_metadata.py -- fixed metadata of mp3 files
+fix_metadata.py -- fix metadata of mp3 files
 
 """
 
@@ -109,6 +109,8 @@ def main():
         first_result = extract_first_result(search_result)
         cover_image_url = first_result['artworkUrl100']
         download_cover_image(cover_image_url)
+        update_cover(file_name)
+        fix_metadata(file_name, first_result)
 
 
 if __name__ == '__main__':
