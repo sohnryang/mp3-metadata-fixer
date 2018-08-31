@@ -6,8 +6,8 @@ fix_metadata.py -- fix metadata of mp3 files
 
 import shutil
 import sys
-import requests
 from xml.sax.saxutils import escape
+import requests
 from mutagen.id3 import ID3, APIC, TPE1, TALB, TRCK
 
 
