@@ -6,6 +6,7 @@ fix_metadata.py -- fix metadata of mp3 files
 
 import shutil
 import sys
+import urllib.parse
 from xml.sax.saxutils import escape
 import requests
 from mutagen.id3 import ID3, APIC, TPE1, TALB, TRCK
@@ -19,7 +20,7 @@ def generate_search_query(file_name):
     Arguments:
     file_name: str -- name of a file which is used to generate a query.
     """
-    return escape(file_name).replace(' ', '+').replace('.mp3', '')
+    return urllib.parse.quote_plus(file_name)
 
 
 def get_itunes_search_results(query):
