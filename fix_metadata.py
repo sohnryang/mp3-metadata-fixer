@@ -10,7 +10,7 @@ import sys
 import urllib.parse
 from xml.sax.saxutils import escape
 import requests
-from mutagen.id3 import ID3, APIC, TPE1, TALB, TRCK
+from mutagen.id3 import ID3, APIC, TPE1, TALB, TRCK, TIT2
 
 
 def generate_search_query(file_name):
@@ -74,7 +74,7 @@ def fix_metadata(file_name, search_result):
     """
     audio = ID3(file_name)
     audio['TPE1'] = TPE1(encoding=3, text=search_result['artistName'])
-    audio['TIT2'] = TALB(encoding=3, text=search_result['trackName'])
+    audio['TIT2'] = TIT2(encoding=3, text=search_result['trackName'])
     audio['TRCK'] = TRCK(encoding=3, text=str(search_result['trackNumber']))
     audio['TALB'] = TALB(encoding=3, text=search_result['collectionName'])
     audio.save()
